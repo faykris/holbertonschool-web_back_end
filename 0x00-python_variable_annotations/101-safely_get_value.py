@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""10. Duck typing - first element of a sequence"""
+"""11. More involved type annotations"""
 from typing import Union, Any, Mapping, TypeVar
 
 
