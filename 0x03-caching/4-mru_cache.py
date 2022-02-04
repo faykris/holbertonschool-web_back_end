@@ -8,7 +8,6 @@ import datetime
 class MRUCache(BaseCaching):
     """MRUCache - caching system class """
     action_keys = {}
-    keys_list = []
 
     def __init__(self):
         """constructor method"""
