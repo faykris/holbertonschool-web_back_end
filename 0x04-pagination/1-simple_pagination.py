@@ -41,5 +41,18 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-        """get_page - method"""
-        assert((page > 0 and page_size > 0), "")
+        """get_page - returns records according page and page_size"""
+        if (type(page) == int and page > 0) and\
+                (type(page_size) == int and page_size > 0):
+            page_tuple = index_range(page, page_size)
+            r_list = []
+            s_index = page_tuple[0]
+            try:
+                while s_index < (page_tuple[1]):
+                    r_list.append(self.dataset()[s_index])
+                    s_index += 1
+                return r_list
+            except IndexError:
+                return []
+        else:
+            raise AssertionError
