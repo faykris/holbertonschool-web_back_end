@@ -15,4 +15,4 @@ def index_range(page: int, page_size: int) -> Tuple[int, int]:
         if ind == e_page:
             break
         s_page = ind
-    return (s_page, e_page)
+    return s_page, e_page
