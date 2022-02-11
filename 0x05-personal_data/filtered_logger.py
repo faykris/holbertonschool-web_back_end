@@ -56,3 +56,19 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         database=os.environ.get('PERSONAL_DATA_DB_NAME')
     )
     return connector
+
+
+def main():
+    """ main - get users from mysql query """
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute('SELECT * FROM users;')
+    logging = get_logger()
+    for row in cursor:
+        logging.log(logging.INFO, row[0])
+    cursor.close()
+    db.close()
+
+
+if __name__ == "__main__":
+    main()
