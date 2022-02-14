@@ -38,13 +38,13 @@ def filter_datum(fields: List[str], redaction: str,
 
 def get_logger() -> logging.Logger:
     """get_logger - return logger object"""
-    logging = logging.getLogger('user_data')
-    logging.setLevel(logging.INFO)
-    logging.propagate = False
-    handler = logging.StreamHandler()
-    handler.setFormatter(RedactingFormatter(PII_FIELDS))
-    logging.addHandler(handler)
-    return logging
+    logger = logging.getLogger('user_data')
+    logger.setLevel(logging.INFO)
+    logger.propagate = False
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(RedactingFormatter(PII_FIELDS))
+    logger.addHandler(stream_handler)
+    return logger
 
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
@@ -62,10 +62,10 @@ def main():
     """ main - get users from mysql query """
     db = get_db()
     cursor = db.cursor()
-    cursor.execute('SELECT * FROM users;')
-    logging = get_logger()
+    cursor.execute("SELECT * FROM users;")
+    logger = get_logger()
     for row in cursor:
-        logging.log(logging.INFO, row[0])
+        logger.log(logging.INFO, row)
     cursor.close()
     db.close()
 
