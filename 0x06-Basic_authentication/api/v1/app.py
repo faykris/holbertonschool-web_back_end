@@ -38,6 +38,8 @@ def forbidden(error) -> str:
     return jsonify({"error": "Forbidden"}), 403
 
 def handler_before_request():
+    """ Before handler
+    """
     if auth is None:
         pass
     elif request.path:
