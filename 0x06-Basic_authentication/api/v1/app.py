@@ -40,13 +40,21 @@ def forbidden(error) -> str:
     return jsonify({"error": "Forbidden"}), 403
 
 
-def handler_before_request():
+@app.before_request
+def before_request_func():
     """ Before handler
     """
+    p_list = ['/api/v1/status/',
+              '/api/v1/unauthorized/',
+              '/api/v1/forbidden/']
     if auth is None:
         pass
-    elif request.path:
+    elif not auth.require_auth(request.path, p_list):
         pass
+    elif auth.authorization_header(request) is None:
+        abort(401)
+    elif auth.current_user(request) is None:
+        abort(403)
 
 
 if __name__ == "__main__":
