@@ -16,6 +16,9 @@ class Auth:
         if excluded_paths.__contains__(path) or \
                 excluded_paths.__contains__(path + "/"):
             return False
+        for ex_path in excluded_paths:
+            if path[:ex_path.find('*')] in ex_path[:ex_path.find('*')]:
+                return False
         return True
 
     def authorization_header(self, request=None) -> str:
