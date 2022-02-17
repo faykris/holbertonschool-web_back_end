@@ -26,7 +26,9 @@ def auth_session_login() -> str:
     if User.is_valid_password(obj_list, password):
         for i in range(len(obj_list)):
             if User.is_valid_password(obj_list[i], password):
+                """
                 from api.v1.app import auth
                 session_id = auth.create_session(obj_list[i].id)
                 return obj_list[i]
+                """
         return jsonify({"error": "wrong password"}), 401
