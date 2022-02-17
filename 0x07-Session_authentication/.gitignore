@@ -1,0 +1,5 @@
+.idea
+__pycache__
+*main*
+venv
+.db_User.json
