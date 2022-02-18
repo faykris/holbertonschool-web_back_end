@@ -32,7 +32,7 @@ class SessionExpAuth(SessionAuth):
         """user_id_for_session_id"""
         if session_id is None:
             return None
-        if not self.user_id_by_session_id[session_id]:
+        if not self.user_id_by_session_id.get(session_id):
             return None
         user_id = self.user_id_by_session_id[session_id].get('user_id')
         create_at = self.user_id_by_session_id[session_id].get('created_at')
