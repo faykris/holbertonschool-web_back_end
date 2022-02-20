@@ -3,3 +3,4 @@ __pycache__
 *main*
 venv
 .db_User.json
+.db_UserSession.json
