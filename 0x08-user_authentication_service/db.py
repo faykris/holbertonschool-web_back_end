@@ -46,6 +46,9 @@ class DB:
     def find_user_by(self, **kwargs: dict) -> User:
         """find_user_by"""
         try:
+            f_dict = {}
+            for key, value in kwargs.items():
+                f_dict['User.{}'.format(key)] = value
             user = self._session.query(User).filter_by(**kwargs).first()
             if user:
                 return user
