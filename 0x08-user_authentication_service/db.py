@@ -46,17 +46,7 @@ class DB:
     def find_user_by(self, **kwargs: dict) -> User:
         """find_user_by"""
         try:
-            query = ''
-            i = 0
-            for key, value in kwargs.items():
-                if i > 0:
-                    query += ", "
-                if type(value) != str:
-                    query += f"User.{key} == {value}"
-                else:
-                    query += f"User.{key} == '{value}'"
-                i += 1
-            user = self._session.query(User).filter(eval(query)).first()
+            user = self._session.query(User).filter_by(**kwargs).first()
             if user:
                 return user
             raise NoResultFound
