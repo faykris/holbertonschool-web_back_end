@@ -20,8 +20,9 @@ class User(Base):
     reset_token = Column(String(250), nullable=True)
 
     def __repr__(self) -> str:
+        """string representation of User"""
         return f"<User(id={self.id}, " + \
             f"email='{self.email}', " + \
             f"hashed_password='{self.hashed_password}', " + \
-            f"session_id='{self.hashed_password}', " + \
+            f"session_id='{self.session_id}', " + \
             f"reset_token='{self.reset_token}')>"
