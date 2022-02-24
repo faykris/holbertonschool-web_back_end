@@ -24,8 +24,7 @@ def register_user() -> str:
             request.form['password']
         )
         return jsonify({"email": user.email, "message": "user created"}), 200
-    except:
-        ValueError
+    except ValueError:
         return jsonify({"message": "email already registered"}), 400
 
 
