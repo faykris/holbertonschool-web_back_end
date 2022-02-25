@@ -42,7 +42,7 @@ class DB:
         self._session.commit()
         return user
 
-    def find_user_by(self, **kwargs: dict) -> User:
+    def find_user_by(self, **kwargs) -> User:
         """find_user_by"""
         try:
             user = self._session.query(User).filter_by(**kwargs).first()
@@ -52,7 +52,7 @@ class DB:
         except TypeError:
             raise InvalidRequestError
 
-    def update_user(self, user_id: int, **kwargs: dict) -> None:
+    def update_user(self, user_id: int, **kwargs) -> None:
         """update_user"""
         user = self.find_user_by(id=user_id)
         for key, value in kwargs.items():
