@@ -79,7 +79,7 @@ class Auth:
             new_uuid = _generate_uuid()
             self._db.update_user(user.id, reset_token=new_uuid)
             return new_uuid
-        except NoResultFound:
+        except Exception:
             raise ValueError
 
     def update_password(self, reset_token: str, password: str) -> None:
