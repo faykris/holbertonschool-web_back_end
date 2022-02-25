@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
-
+from typing import TypeVar
 from user import Base, User
 
 
@@ -42,7 +42,7 @@ class DB:
         self._session.commit()
         return user
 
-    def find_user_by(self, **kwargs: dict) -> User:
+    def find_user_by(self, **kwargs: dict) -> TypeVar('User'):
         """find_user_by"""
         try:
             user = self._session.query(User).filter_by(**kwargs).first()
