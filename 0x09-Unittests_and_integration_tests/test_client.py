@@ -31,3 +31,16 @@ class TestGithubOrgClient(unittest.TestCase):
                    ):
             response = GithubOrgClient(name)._public_repos_url
             self.assertEqual(response, expected.get('repos_url'))
+
+    @patch('client.get_json')
+    def test_public_repos(self, t_mock):
+        """test_public_repos"""
+        return_value = [{'name': 'google'}, {'name': 'abc'}]
+        t_mock.return_value = return_value
+        with patch('client.GithubOrgClient._public_repos_url',
+                   PropertyMock(return_value=return_value)
+                   ) as m_public:
+            response = GithubOrgClient('example')
+            self.assertEqual(response.public_repos(), ['google', 'abc'])
+            t_mock.assert_called_once()
+            m_public.assert_called_once()
