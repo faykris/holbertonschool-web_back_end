@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """1. Basic Babel setup"""
-from decimal import localcontext
-import locale
+
 from flask import Flask, render_template, request
 from flask_babel import Babel, Locale
+
 
 app = Flask(__name__)
 babel = Babel(app)
