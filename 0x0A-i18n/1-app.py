@@ -17,9 +17,14 @@ class Config(object):
 
 @babel.localeselector
 def get_locale():
-    """get_locale - method"""
-    return request.accept_languages.best_match(
-        Config.LANGUAGES, Config.BABEL_DEFAULT_TIMEZONE)
+    """get_locale - function"""
+    return request.accept_languages.best_match(Config.LANGUAGES)
+
+
+@babel.timezoneselector
+def get_timezone():
+    """get_timezone - function"""
+    return Config.BABEL_DEFAULT_TIMEZONE
 
 
 @app.route('/')
