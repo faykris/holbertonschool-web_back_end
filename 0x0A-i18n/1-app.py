@@ -18,7 +18,8 @@ class Config(object):
 @babel.localeselector
 def get_locale():
     """get_locale"""
-    return request.accept_languages.best_match(Config.LANGUAGES)
+    return request.accept_languages.best_match(
+        Config.LANGUAGES, Config.BABEL_DEFAULT_TIMEZONE)
 
 
 @app.route('/')
