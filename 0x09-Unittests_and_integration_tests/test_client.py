@@ -35,7 +35,10 @@ class TestGithubOrgClient(unittest.TestCase):
     @patch('client.get_json')
     def test_public_repos(self, t_mock):
         """test_public_repos"""
-        return_value = [{'name': 'google'}, {'name': 'abc'}]
+        return_value = [
+            {'name': 'google'},
+            {'name': 'abc'}
+        ]
         t_mock.return_value = return_value
         with patch('client.GithubOrgClient._public_repos_url',
                    PropertyMock(return_value=return_value)
@@ -44,3 +47,14 @@ class TestGithubOrgClient(unittest.TestCase):
             self.assertEqual(response.public_repos(), ['google', 'abc'])
             t_mock.assert_called_once()
             m_public.assert_called_once()
+
+    @parameterized.expand([
+        ({"license": {"key": "my_license"}}, "my_license", True),
+        ({"license": {"key": "other_license"}}, "my_license", False)
+    ])
+    def test_has_license(self, repo, license_key, expected):
+        """test_has_license"""
+        self.assertEqual(
+            GithubOrgClient.has_license(
+                repo, license_key
+            ), expected)
