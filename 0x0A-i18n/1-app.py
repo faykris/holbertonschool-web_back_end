@@ -1,21 +1,32 @@
 #!/usr/bin/env python3
-"""0. Basic Flask app"""
-from flask import Flask, jsonify
+"""1. Basic Babel setup"""
+from flask import Flask, render_template, request
 from flask_babel import Babel
 
 app = Flask(__name__)
+app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+app.config['BABEL_DEFAULT_TIMEZONE'] = 'UTC'
 babel = Babel(app)
 
 
 class Config(object):
-    """Config - class"""
-    LANGUAGES = ["en", "fr"]
+    """Config"""
+    LANGUAGES = ['en', 'fr']
 
 
-@app.route('/', strict_slashes=False)
-def status() -> str:
-    """ GET 
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
+
+
+@app.route('/')
+def index():
+    """ GET
     Return:
-      - the status of the API
+      - rendered HTML template
     """
-    pass
+    return render_template('0-index.html')
+
+
+if __name__ == "__main__":
+    app.run()
