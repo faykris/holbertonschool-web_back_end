@@ -2,7 +2,7 @@
 """A github org client - Test
 """
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, PropertyMock
 from client import GithubOrgClient, get_json
 from parameterized import parameterized
 
@@ -16,9 +16,18 @@ class TestGithubOrgClient(unittest.TestCase):
     ])
     @patch('client.get_json')
     def test_org(self, org_name, m_json):
-        """ Test method returns correct output """
+        """test_org"""
         gh_client = GithubOrgClient(org_name)
         gh_client.org()
-        m_json.assert_called_once_with(
-            "https://api.github.com/orgs/{}".format(
-                org_name))
+        m_json.assert_called_once()
+
+    @parameterized.expand([
+        ("url", {'repos_url': 'http://www.example.com'})
+    ])
+    def test_public_repos_url(self, name, expected):
+        """test_public_repos_url"""
+        with patch('client.GithubOrgClient.org',
+                   PropertyMock(return_value=expected)
+                   ):
+            response = GithubOrgClient(name)._public_repos_url
+            self.assertEqual(response, expected.get('repos_url'))
