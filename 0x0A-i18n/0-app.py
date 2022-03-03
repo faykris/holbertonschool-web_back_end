@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def index() -> str:
+def index():
     """ GET
     Return:
       - rendered HTML template
