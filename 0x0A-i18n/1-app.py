@@ -9,7 +9,7 @@ babel = Babel(app)
 
 
 class Config(object):
-    """Config"""
+    """Config - class"""
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
@@ -17,7 +17,7 @@ class Config(object):
 
 @babel.localeselector
 def get_locale():
-    """get_locale"""
+    """get_locale - method"""
     return request.accept_languages.best_match(
         Config.LANGUAGES, Config.BABEL_DEFAULT_TIMEZONE)
 
