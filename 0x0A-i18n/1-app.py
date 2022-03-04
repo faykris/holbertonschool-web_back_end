@@ -20,6 +20,7 @@ setattr(Config, 'BABEL_DEFAULT_LOCALE', "en")
 setattr(Config, 'BABEL_DEFAULT_TIMEZONE', "UTC")
 # app.config.setdefault(Config.BABEL_DEFAULT_LOCALE)
 # app.config.setdefault(Config.BABEL_DEFAULT_TIMEZONE)
+app.config.from_object(Config);
 
 
 @app.route('/')
