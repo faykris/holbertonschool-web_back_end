@@ -9,7 +9,7 @@ from functools import wraps
 
 
 def replay(fn: Callable) -> None:
-    """replay - """
+    """replay - display history calls of particular function"""
     r = redis.Redis()
     f_name = fn.__qualname__
     n_calls = r.get(f_name)
@@ -23,6 +23,14 @@ def replay(fn: Callable) -> None:
     outputs = r.lrange(f_name + ":outputs", 0, -1)
 
     for inp, out in zip(inputs, outputs):
+        try:
+            inp = inp.decode("utf-8")
+        except Exception:
+            inp = ""
+        try:
+            out = out.decode("utf-8")
+        except Exception:
+            out = ""
         print(f"{f_name}(*{inp}) -> {out}")
 
 
@@ -77,9 +85,9 @@ class Cache:
         return self._redis.get(key)
 
     def get_str(self, key: str) -> str:
-        """get_str"""
+        """get_str - method"""
         return str(key)
 
     def get_int(self, key: str) -> int:
-        """get_str"""
+        """get_str - method"""
         return int(key)
