@@ -2,10 +2,9 @@
 """
 0. Writing strings to Redis
 """
-from itertools import count
 import redis
 from uuid import uuid4
-from typing import Union, Callable
+from typing import Union, Callable, Optional
 from functools import wraps
 
 
@@ -14,10 +13,10 @@ def count_calls(method: Callable) -> Callable:
     key = method.__qualname__
 
     @wraps(method)
-    def wrapper(self, name):
+    def wrapper(self, *args, **kwds):
         """wrapper"""
-        print(key)
-        print(name)
+        self._redis.incr(key)
+        return method(self, *args, **kwds)
     return wrapper
 
 
@@ -36,7 +35,7 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Callable) -> Union[str, bytes, int, float]:
+    def get(self, key: str, fn: Optional[Callable] = None) -> Union[str, bytes, int, float]:
         """get - method"""
         if fn:
             return fn(self._redis.get(key))
