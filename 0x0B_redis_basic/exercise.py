@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-0. Writing strings to Redis
+Redis exercise with cache implementation
 """
 import redis
 from uuid import uuid4
@@ -9,6 +9,7 @@ from functools import wraps
 
 
 def replay(fn: Callable) -> None:
+    """replay - """
     r = redis.Redis()
     f_name = fn.__qualname__
     n_calls = r.get(f_name)
@@ -22,14 +23,6 @@ def replay(fn: Callable) -> None:
     outputs = r.lrange(f_name + ":outputs", 0, -1)
 
     for inp, out in zip(inputs, outputs):
-        try:
-            inp = inp.decode("utf-8")
-        except Exception:
-            inp = ""
-        try:
-            out = out.decode("utf-8")
-        except Exception:
-            out = ""
         print(f"{f_name}(*{inp}) -> {out}")
 
 
@@ -76,7 +69,8 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Optional[Callable] = None) -> Union[str, bytes, int, float]:
+    def get(self, key: str, fn: Optional[Callable] = None
+            ) -> Union[str, bytes, int, float]:
         """get - method"""
         if fn:
             return fn(self._redis.get(key))
