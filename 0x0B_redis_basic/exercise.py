@@ -27,7 +27,7 @@ class Cache:
     def __init__(self):
         """Constructor method"""
         self._redis = redis.Redis()
-        self._redis.flushdb
+        self._redis.flushdb()
 
     @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
