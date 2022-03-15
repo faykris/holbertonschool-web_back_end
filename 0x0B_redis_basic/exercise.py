@@ -8,6 +8,31 @@ from typing import Union, Callable, Optional
 from functools import wraps
 
 
+def replay(fn: Callable) -> None:
+    r = redis.Redis()
+    f_name = fn.__qualname__
+    n_calls = r.get(f_name)
+    try:
+        n_calls = n_calls.decode("utf-8")
+    except Exception:
+        n_calls = 0
+    print(f"{f_name} was called {n_calls} times:")
+
+    inputs = r.lrange(f_name + ":inputs", 0, -1)
+    outputs = r.lrange(f_name + ":outputs", 0, -1)
+
+    for inp, out in zip(inputs, outputs):
+        try:
+            inp = inp.decode("utf-8")
+        except Exception:
+            inp = ""
+        try:
+            out = out.decode("utf-8")
+        except Exception:
+            out = ""
+        print(f"{f_name}(*{inp}) -> {out}")
+
+
 def call_history(method: Callable) -> Callable:
     """call_history - history wrap method"""
 
