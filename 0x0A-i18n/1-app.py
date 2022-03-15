@@ -22,7 +22,7 @@ setattr(Config, 'BABEL_DEFAULT_TIMEZONE', "UTC")
 # app.config.setdefault(Config.BABEL_DEFAULT_TIMEZONE)
 
 
-@app.route('/')
+@app.route('/', strict_slashes=False)
 def index():
     """ GET
     Return:
