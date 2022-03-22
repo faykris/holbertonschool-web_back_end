@@ -1,7 +1,6 @@
 // 2. Insert document
 // Script that inserts a document in the collection school.
 
-db.createCollection("school")
-db.school.insertOne({
+db.school.insert({
  "name" : "Holberton school"
 })
