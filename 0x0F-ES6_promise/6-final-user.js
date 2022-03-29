@@ -1,11 +1,15 @@
-import signUpUser from "./4-user-promise";
-import uploadPhoto from "./5-photo-reject";
-import {validateUseBuiltInsOption} from "@babel/preset-env/lib/normalize-options";
+import signUpUser from './4-user-promise';
+import uploadPhoto from './5-photo-reject';
 
-export default function handleProfileSignup(firstname, lastname, filename) {
-    return Promise.all(
-        [signUpUser(firstname, lastname), uploadPhoto(filename)]
-    ).then((res, err) => {
+export default async function handleProfileSignup(firstname, lastname, filename) {
+  const user = await signUpUser(firstname, lastname).then((res) => ({
+    status: 'fulfilled',
+    value: res,
+  }));
+  const photo = await uploadPhoto(filename).catch((err) => ({
+    status: 'rejected',
+    value: `${err.name}: ${err.message}`,
+  }));
 
-    });
+  return [user, photo];
 }
