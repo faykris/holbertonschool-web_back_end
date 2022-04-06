@@ -2,7 +2,7 @@ export default function cleanSet(set, startString) {
   let text = '';
   const array = [];
 
-  if (startString || startString.length > 0) {
+  if (startString || typeof set === 'object') {
     for (const element of set) {
       if (element && element.startsWith(startString)) {
         array.push(element.slice(startString.length));
