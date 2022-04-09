@@ -1,10 +1,11 @@
-module.exports = async function countStudents (path) {
-  const fs = require('fs').promises;
+const fs = require('fs').promises;
+
+module.exports = async function countStudents(path) {
   await fs.readFile(path, 'binary')
     .then((data) => {
       const lines = data.split('\n');
       lines.splice(0, 1);
-      for (let i = lines.length - 1; i >= 0; i--) {
+      for (let i = lines.length - 1; i >= 0; i -= 1) {
         if (lines[i].length === 0) lines.splice(i, 1);
       }
       const number = lines.length;
@@ -16,7 +17,7 @@ module.exports = async function countStudents (path) {
       }
       if (number > 0) {
         console.log(`Number of students: ${number}`);
-        for (const key in obj) {
+        for (const key of Object.keys(obj)) {
           console.log(`Number of students in ${key}: ${obj[key].length}. List: ${obj[key].join(', ')}`);
         }
       }
