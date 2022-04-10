@@ -1,7 +1,7 @@
 const http = require('http');
 const countStudents = require('./3-read_file_async');
 
-http.createServer(async (req, res) => {
+module.exports = http.createServer(async (req, res) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
   if (req.url === '/') {
@@ -17,7 +17,7 @@ http.createServer(async (req, res) => {
         res.write(`\nNumber of students in ${key}: ${obj[key].length}. List: ${obj[key].join(', ')}`);
       }
     } catch (error) {
-      res.end(error.message);
+      res.end(`\n${error.message}`);
     }
   }
   res.end();
