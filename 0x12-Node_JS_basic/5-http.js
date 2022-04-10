@@ -1,14 +1,23 @@
 const http = require('http');
 const countStudents = require('./3-read_file_async');
 
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/plain'});
+http.createServer(async (req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
   if (req.url === '/') {
     res.write('Hello Holberton School!');
-  }
-  else if (req.url === '/students') {
+  } else if (req.url === '/students') {
     res.write('This is the list of our students');
-    countStudents("database.csv")
+    try {
+      const obj = await countStudents('database.csv');
+      let number = 0;
+      for (const ele of Object.values(obj)) number += ele.length;
+      res.write(`\nNumber of students: ${number}`);
+      for (const key of Object.keys(obj)) {
+        res.write(`\nNumber of students in ${key}: ${obj[key].length}. List: ${obj[key].join(', ')}`);
+      }
+    } catch (error) {
+      res.end(error.message);
+    }
   }
   res.end();
 }).listen(1245);

@@ -1,8 +1,12 @@
-const fs = require('fs').promises;
+const fs = require('fs');
 
 module.exports = async function countStudents(path) {
-  await fs.readFile(path, 'binary')
-    .then((data) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, 'utf8', (err, data) => {
+      if (err) {
+        reject(Error('Cannot load the database'));
+        return;
+      }
       const lines = data.split('\n');
       lines.splice(0, 1);
       for (let i = lines.length - 1; i >= 0; i -= 1) {
@@ -21,8 +25,7 @@ module.exports = async function countStudents(path) {
           console.log(`Number of students in ${key}: ${obj[key].length}. List: ${obj[key].join(', ')}`);
         }
       }
-    })
-    .catch(() => {
-      throw new Error('Cannot load the database');
+      resolve(obj);
     });
+  });
 };
