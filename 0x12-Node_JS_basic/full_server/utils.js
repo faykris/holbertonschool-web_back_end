@@ -8,9 +8,10 @@ export default function readDatabase(path) {
         return;
       }
       const lines = data.split('\n');
-      let students = lines.filter((item) => item);
-      students = students.map((item) => item.split(','));
-      students.splice(0, 1);
+      lines.splice(0, 1);
+      for (let i = lines.length - 1; i >= 0; i -= 1) {
+        if (lines[i].length === 0) lines.splice(i, 1);
+      }
       const obj = {};
       for (const line of lines) {
         const row = line.split(',');
