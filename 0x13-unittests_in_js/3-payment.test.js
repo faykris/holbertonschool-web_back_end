@@ -3,7 +3,7 @@ const expect = require("chai").expect;
 const sendPaymentRequestToApi = require('./3-payment');
 const Utils = require('./utils');
 
-describe('Spies', function () {
+describe('Spies', function() {
   it('checks both have the same math', function() {
     const spyUtils = sinon.spy(Utils, 'calculateNumber');
     const spyConsole = sinon.spy(console, 'log');
