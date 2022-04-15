@@ -21,8 +21,7 @@ app.get('/available_payments', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  console.log(req.body);
-  const username = req.body.userName || undefined;
+  const username = req.body.userName;
   res.end(`Welcome ${username}`);
 });
 
